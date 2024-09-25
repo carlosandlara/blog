@@ -5,15 +5,4 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
-  title = 'Título';
-  subtitle = 'Subtítulo';
-
-  changeTitle(inputData: string) {
-    this.title = inputData;
-  }
-
-  showFormValue(data: any) {
-    console.log(data);
-  }
-}
+export class AppComponent {}

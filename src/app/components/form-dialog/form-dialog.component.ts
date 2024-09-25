@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 
 export interface City {
   id: number;
@@ -16,6 +17,8 @@ export interface City {
 })
 export class FormDialogComponent {
   @Output() sendFormEvent: EventEmitter<any> = new EventEmitter();
+
+  constructor(private dialogRef: MatDialogRef<FormDialogComponent>) {}
 
   reportTypes: any[] = [
     {
@@ -114,5 +117,9 @@ export class FormDialogComponent {
     } else {
       alert('Le faltan campos al formulario, intente nuevamente.');
     }
+  }
+
+  closeModal() {
+    this.dialogRef.close();
   }
 }
