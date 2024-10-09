@@ -16,8 +16,6 @@ export interface City {
   styleUrls: ['./form-dialog.component.scss'],
 })
 export class FormDialogComponent {
-  @Output() sendFormEvent: EventEmitter<any> = new EventEmitter();
-
   constructor(private dialogRef: MatDialogRef<FormDialogComponent>) {}
 
   reportTypes: any[] = [
@@ -112,7 +110,16 @@ export class FormDialogComponent {
 
   saveForm() {
     if (this.myForm.valid) {
-      this.sendFormEvent.emit(this.myForm.value);
+      const formData = {
+        title: this.myForm.value.title,
+        subtitle: this.myForm.value.subtitle,
+        body: this.myForm.value.body,
+        report_type: this.myForm.value.reportType,
+        is_primary: this.myForm.value.isPrimary,
+        publisher_name: this.myForm.value.publisherName,
+        publisher_job: this.myForm.value.publisherJob,
+      };
+      this.dialogRef.close(formData);
       this.myForm.reset();
     } else {
       alert('Le faltan campos al formulario, intente nuevamente.');
