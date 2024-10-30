@@ -18,9 +18,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { SingleViewComponent } from './components/single-view/single-view.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, FormDialogComponent, MainFeedComponent, SingleViewComponent],
+  declarations: [AppComponent, FormDialogComponent, MainFeedComponent, SingleViewComponent, LoginComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
