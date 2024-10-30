@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { MainFeedComponent } from './components/main-feed/main-feed.component';
-import { FormDialogComponent } from './components/form-dialog/form-dialog.component';
+import { SingleViewComponent } from './components/single-view/single-view.component';
 
 const routes: Routes = [
   { path: '', component: MainFeedComponent },
-  { path: 'test', component: FormDialogComponent },
+  { path: 'blog/:id', component: SingleViewComponent },
 ];
 
 @NgModule({

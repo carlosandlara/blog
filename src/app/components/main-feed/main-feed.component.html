@@ -1,6 +1,30 @@
 <div class="main-header">
   <p>Noticiero UnACh</p>
-  <button mat-raised-button (click)="openForm()" class="btn">
+  <button mat-raised-button (click)="createBlog()" class="btn">
     Crear Noticia
   </button>
 </div>
+
+<div style="display: flex; gap: 5px" *ngIf="isLoading">
+  <mat-spinner style="margin: 30px" diameter="30"></mat-spinner>
+  <div style="margin-top: 35px">Cargando noticias...</div>
+</div>
+
+<mat-card *ngFor="let blog of blogs" class="mat-card">
+  <h2 mat-card-title style="margin: 5px 20px">{{ blog.title }}</h2>
+  <h4 style="margin: 20px">{{ blog.subtitle }}</h4>
+  <mat-card-content>
+    <button
+      mat-raised-button
+      color="secondary"
+      class="mx-2"
+      (click)="goToBlog(blog.id)"
+    >
+      Ver
+    </button>
+
+    <button mat-raised-button color="primary" (click)="editBlog(blog.id)">
+      Editar
+    </button>
+  </mat-card-content>
+</mat-card>

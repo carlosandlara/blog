@@ -15,14 +15,19 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { MainFeedComponent } from './components/main-feed/main-feed.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { HttpClientModule } from '@angular/common/http';
+import { MatCardModule } from '@angular/material/card';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { SingleViewComponent } from './components/single-view/single-view.component';
 
 @NgModule({
-  declarations: [AppComponent, FormDialogComponent, MainFeedComponent],
+  declarations: [AppComponent, FormDialogComponent, MainFeedComponent, SingleViewComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    MatCardModule,
     MatDialogModule,
     BrowserAnimationsModule,
+    MatProgressSpinnerModule,
     FormsModule,
     MatFormFieldModule,
     MatInputModule,

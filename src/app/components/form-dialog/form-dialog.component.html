@@ -32,9 +32,9 @@
 
   <mat-form-field style="width: 50%">
     <mat-label>Tipo</mat-label>
-    <mat-select multiple formControlName="reportType">
-      <mat-option *ngFor="let type of reportTypes" [value]="type.title">
-        {{ type.title }}
+    <mat-select formControlName="reportType">
+      <mat-option *ngFor="let type of reportTypes" [value]="type">
+        {{ type }}
       </mat-option>
     </mat-select>
   </mat-form-field>
@@ -71,18 +71,16 @@
       <mat-form-field style="width: 100%">
         <mat-label>Cargo</mat-label>
         <mat-select formControlName="publisherJob">
-          <mat-option *ngFor="let job of jobPositions" [value]="job.name">
-            {{ job.name }}
+          <mat-option *ngFor="let job of jobPositions" [value]="job">
+            {{ job }}
           </mat-option>
         </mat-select>
       </mat-form-field>
     </div>
   </div>
 
-  <div class="footer-buttons" *ngIf="true">
-    <button mat-raised-button class="my-2" (click)="closeModal()">
-      Cancelar
-    </button>
+  <div class="footer-buttons">
+    <button mat-raised-button class="my-2" (click)="close()">Cancelar</button>
 
     <button mat-raised-button color="primary" class="my-2" (click)="saveForm()">
       Guardar

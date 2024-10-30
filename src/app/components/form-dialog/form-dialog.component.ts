@@ -1,79 +1,55 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
-
-export interface City {
-  id: number;
-  name: string;
-  population: number;
-  size: number;
-  active: boolean;
-}
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { Blog, BlogFormData } from 'src/app/app-interface';
 
 @Component({
   selector: 'app-body',
   templateUrl: './form-dialog.component.html',
   styleUrls: ['./form-dialog.component.scss'],
 })
-export class FormDialogComponent {
-  constructor(private dialogRef: MatDialogRef<FormDialogComponent>) {}
+export class FormDialogComponent implements OnInit {
+  constructor(
+    private dialogRef: MatDialogRef<FormDialogComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: Blog
+  ) {}
 
-  reportTypes: any[] = [
-    {
-      title: 'Emergencia',
-      active: true,
-    },
-    {
-      title: 'Política',
-      active: true,
-    },
-    {
-      title: 'Social',
-      active: true,
-    },
-    {
-      title: 'Económica',
-      active: true,
-    },
-    {
-      title: 'Cultural',
-      active: true,
-    },
-    {
-      title: 'Deportiva',
-      active: true,
-    },
+  ngOnInit(): void {
+    if (this.data) {
+      this.myForm.patchValue({
+        title: this.data.title,
+        subtitle: this.data.subtitle,
+        body: this.data.body,
+        isPrimary: this.data.is_primary,
+        publisherName: this.data.publisher_name,
+        publisherJob: this.data.publisher_job,
+      });
+    }
+  }
+
+  reportTypes: string[] = [
+    'Emergencia',
+    'Política',
+    'Social',
+    'Económica',
+    'Cultural',
+    'Deportiva',
   ];
 
-  jobPositions: any[] = [
-    {
-      id: 1,
-      name: 'Redactor jefe',
-    },
-    {
-      id: 2,
-      name: 'Redactor',
-    },
-    {
-      id: 3,
-      name: 'Redactor en práctica',
-    },
+  jobPositions: string[] = [
+    'Redactor Jefe',
+    'Redactor',
+    'Redactor en práctica',
   ];
 
   myForm = new FormGroup({
     title: new FormControl('', Validators.required),
-    subtitle: new FormControl(null, Validators.required),
-    body: new FormControl(null, [
-      Validators.required,
-      Validators.maxLength(200),
-    ]),
-    reportType: new FormControl(null, Validators.required),
+    subtitle: new FormControl('', Validators.required),
+    body: new FormControl('', [Validators.required]),
+    reportType: new FormControl('', Validators.required),
     isPrimary: new FormControl(false, Validators.required),
-    publisherName: new FormControl(null, [
-      Validators.required,
-      Validators.pattern('[a-zA-Z]*'),
-    ]),
-    publisherJob: new FormControl(null, Validators.required),
+    publisherName: new FormControl('', Validators.required),
+    publisherJob: new FormControl('', Validators.required),
   });
 
   get title(): FormControl {
@@ -110,23 +86,26 @@ export class FormDialogComponent {
 
   saveForm() {
     if (this.myForm.valid) {
-      const formData = {
-        title: this.myForm.value.title,
-        subtitle: this.myForm.value.subtitle,
-        body: this.myForm.value.body,
-        report_type: this.myForm.value.reportType,
-        is_primary: this.myForm.value.isPrimary,
-        publisher_name: this.myForm.value.publisherName,
-        publisher_job: this.myForm.value.publisherJob,
+      const blogFormData: BlogFormData = {
+        title: this.myForm.value.title ?? '',
+        subtitle: this.myForm.value.subtitle ?? '',
+        body: this.myForm.value.body ?? '',
+        reportType: this.myForm.value.reportType ?? '',
+        isPrimary: this.myForm.value.isPrimary ?? false,
+        publisherName: this.myForm.value.publisherName ?? '',
+        publisherJob: this.myForm.value.publisherJob ?? '',
       };
-      this.dialogRef.close(formData);
-      this.myForm.reset();
-    } else {
-      alert('Le faltan campos al formulario, intente nuevamente.');
+      if (this.data) {
+        // update blog
+        this.dialogRef.close({ id: this.data.id, formData: blogFormData });
+      } else {
+        // create blog
+        this.dialogRef.close(blogFormData);
+      }
     }
   }
 
-  closeModal() {
+  close() {
     this.dialogRef.close();
   }
 }
